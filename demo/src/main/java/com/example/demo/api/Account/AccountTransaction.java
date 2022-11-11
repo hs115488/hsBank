@@ -1,5 +1,14 @@
 package com.example.demo.api.Account;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class AccountTransaction {
-    public Integer id, amount;
+    private Integer id, amount;
 }

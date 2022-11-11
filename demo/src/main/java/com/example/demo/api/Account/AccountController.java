@@ -1,5 +1,7 @@
 package com.example.demo.api.Account;
 
+import com.example.demo.api.Transaction.Transaction;
+import com.example.demo.api.Transaction.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -7,10 +9,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 
 @RestController
+@ResponseBody
 public class AccountController {
     @Autowired
     private AccountService accountService;
 
+    @Autowired
+    private TransactionService transactionService;
 
     @RequestMapping(value = "/createAccount", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
@@ -36,13 +41,17 @@ public class AccountController {
     @RequestMapping(value = "/deposit", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void deposit(@RequestBody AccountTransaction accountTransaction) {
-        accountService.deposit(accountTransaction.id, accountTransaction.amount);
+        accountService.deposit(accountTransaction.getId(), accountTransaction.getAmount());
+        transactionService.createTransaction(accountTransaction, "deposit");
+
+
     }
 
     @RequestMapping(value = "/withdraw", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void withdraw(@RequestBody AccountTransaction accountTransaction) {
-        accountService.withdraw(accountTransaction.id, accountTransaction.amount);
+        accountService.withdraw(accountTransaction.getId(), accountTransaction.getAmount());
+        transactionService.createTransaction(accountTransaction, "withdraw");
     }
 
 
