@@ -13,7 +13,5 @@ public class TransactionController {
 
 
     @RequestMapping(value = "/getTransactionsByUser/{account_number}", method = RequestMethod.GET)
-    public List<Transaction> getTransactionsByUser(@PathVariable String account_number){
-        return transactionService.getTransactionsByUser(Integer.parseInt(account_number));
-    }
+    public List<Transaction> getTransactionsByUser(@PathVariable String account_number){ return transactionService.getTransactionsByUser(Integer.parseInt(account_number));}
 }

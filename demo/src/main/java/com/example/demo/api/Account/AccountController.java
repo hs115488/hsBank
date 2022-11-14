@@ -13,7 +13,6 @@ import java.util.Date;
 public class AccountController {
     @Autowired
     private AccountService accountService;
-
     @Autowired
     private TransactionService transactionService;
 
@@ -33,18 +32,8 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/deleteAccount", method = RequestMethod.DELETE)
-    @ResponseStatus(HttpStatus.OK)
     public void deleteAccount(@RequestBody int accountNumber) {
-        accountService.deleteAccount(accountNumber);
-    }
-
-    @RequestMapping(value = "/deposit", method = RequestMethod.PUT)
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public void deposit(@RequestBody AccountTransaction accountTransaction) {
-        accountService.deposit(accountTransaction.getId(), accountTransaction.getAmount());
-        transactionService.createTransaction(accountTransaction, "deposit");
-
-
+            accountService.deleteAccount(accountNumber);
     }
 
     @RequestMapping(value = "/withdraw", method = RequestMethod.PUT)

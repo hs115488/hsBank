@@ -1,6 +1,6 @@
 spring:
     datasource:
-        url: jdbc:mysql://3.84.143.194:3306/hsBank
+        url: jdbc:mysql://52.55.100.168:3306/hsBank
         username: haresh
         password: 115488
         driver-class-name: com.mysql.cj.jdbc.Driver
