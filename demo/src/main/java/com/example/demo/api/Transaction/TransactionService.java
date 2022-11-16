@@ -39,7 +39,10 @@ public class TransactionService {
 
     public List<Transaction> getTransactionsByUser(int account_number){
         List<Transaction> transactions = (List<Transaction>) transactionRepository.findAll();
-        return transactions.stream().filter(t -> t.getAccountNumber() == account_number).collect(Collectors.toList());
+        return transactions
+                .stream()
+                .filter(t -> t.getAccountNumber() == account_number)
+                .collect(Collectors.toList());
     }
 
 }

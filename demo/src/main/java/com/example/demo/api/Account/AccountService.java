@@ -17,15 +17,20 @@ public class AccountService {
         accountRepository.deleteById(id);
     }
 
-    public void deposit(int id, long amount){
+    public void deposit(int id, long amount) throws Exception {
         Account account = accountRepository.findById(Integer.valueOf(id)).orElse(null);
         account.setBalance(account.getBalance() + amount);
 
-        if(account.getBalance() < 0){
-            account.setOverdraft(true);
-            account.setBalance(account.getBalance() - overdraftFee);
+        if(amount < 0){
+            throw new Exception("Deposit amount cannot be less than zero");
         }
-        accountRepository.save(account);
+        else{
+            if(account.getBalance() < 0){
+                account.setOverdraft(true);
+                account.setBalance(account.getBalance() - overdraftFee);
+            }
+            accountRepository.save(account);
+        }
 
     }
     public void withdraw(int id, long amount){

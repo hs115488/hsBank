@@ -5,6 +5,8 @@ import com.example.demo.api.Account.AccountController;
 import com.example.demo.api.Account.AccountRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.assertj.core.api.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -22,6 +24,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -30,13 +33,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class AccountControllerTest{
 	@Autowired
 	private MockMvc mockMvc;
-
-	@MockBean
-	private AccountController accountController;
-
-	@MockBean
+	@Autowired
 	private AccountRepository accountRepository;
-
 	private ObjectMapper mapper;
 	@Test
 	public void isAccountCreated() throws Exception {
@@ -48,7 +46,7 @@ class AccountControllerTest{
 		mapper = new ObjectMapper();
 		mockMvc.perform(MockMvcRequestBuilders.post("/createAccount")
 						.contentType(MediaType.APPLICATION_JSON)
-						.content(this.mapper.writeValueAsString(body))
+						.content(mapper.writeValueAsString(body))
 						.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isCreated());
 	}
@@ -57,7 +55,7 @@ class AccountControllerTest{
 	public void isAccountDeleted() throws Exception{
 		mockMvc.perform(MockMvcRequestBuilders.delete("/deleteAccount")
 						.contentType(MediaType.APPLICATION_JSON)
-						.content("1")
+						.content("2")
 						.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk());
 
@@ -65,7 +63,45 @@ class AccountControllerTest{
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(String.valueOf("ax3"))
 						.accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().isBadRequest());
+				.andExpect(status().isProcessing());
 	}
+
+	@Test
+	public void IsDeposited() throws Exception{
+		mapper = new ObjectMapper();
+		Map<String, Integer> body = new HashMap<>();
+		body.put("id", 2);
+		body.put("amount", 500);
+
+		mockMvc.perform(MockMvcRequestBuilders
+					.put("/deposit")
+					.contentType(MediaType.APPLICATION_JSON)
+					.content(mapper.writeValueAsString(body)))
+				.andExpect(status().isAccepted());
+
+
+
+
+	}
+
+	@Test
+	public void IsWithdrawn() throws Exception{
+		mapper = new ObjectMapper();
+		Map<String, Integer> body = new HashMap<>();
+		body.put("id", 2);
+		body.put("amount" ,500);
+
+		mockMvc.perform(MockMvcRequestBuilders
+						.put("/withdraw")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(mapper.writeValueAsString(body)))
+				.andExpect(status().isAccepted());
+
+
+
+	}
+
+
+
 
 }
