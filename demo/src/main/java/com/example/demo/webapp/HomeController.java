@@ -7,8 +7,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeController {
 
     @RequestMapping("/")
-    public String index(){
-        return "index";
+    public String index(){ return "index"; }
+
+    @RequestMapping("/depositForm")
+    public String depositForm(){
+        return "depositForm";
     }
 
+    @RequestMapping("/withdrawForm")
+    public String withdrawForm(){ return "withdrawForm"; }
 }

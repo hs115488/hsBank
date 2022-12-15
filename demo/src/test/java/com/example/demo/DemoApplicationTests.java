@@ -1,42 +1,37 @@
-/*package com.example.demo;
+package com.example.demo;
 
 import com.example.demo.api.Account.Account;
-import com.example.demo.api.Account.AccountController;
 import com.example.demo.api.Account.AccountRepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.assertj.core.api.Assert;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MockMvcBuilder;
-import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class AccountControllerTest{
 	@Autowired
 	private MockMvc mockMvc;
+
 	@Autowired
 	private AccountRepository accountRepository;
 	private ObjectMapper mapper;
+
+
 	@Test
+	@Order(1)
 	public void isAccountCreated() throws Exception {
 		Map<String, String> body = new HashMap<String, String>();
 		body.put("firstName", "Haresh");
@@ -50,45 +45,27 @@ class AccountControllerTest{
 						.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isCreated());
 	}
-
 	@Test
-	public void isAccountDeleted() throws Exception{
-		mockMvc.perform(MockMvcRequestBuilders.delete("/deleteAccount")
-						.contentType(MediaType.APPLICATION_JSON)
-						.content("2")
-						.accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().isOk());
-
-		mockMvc.perform(MockMvcRequestBuilders.delete("/deleteAccount")
-						.contentType(MediaType.APPLICATION_JSON)
-						.content(String.valueOf("ax3"))
-						.accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().isProcessing());
-	}
-
-	@Test
+	@Order(2)
 	public void IsDeposited() throws Exception{
 		mapper = new ObjectMapper();
 		Map<String, Integer> body = new HashMap<>();
-		body.put("id", 2);
-		body.put("amount", 500);
+		body.put("id", (((List<Account>) accountRepository.findAll()).get(0)).getId());
+		body.put("amount", 5000);
 
 		mockMvc.perform(MockMvcRequestBuilders
 					.put("/deposit")
 					.contentType(MediaType.APPLICATION_JSON)
 					.content(mapper.writeValueAsString(body)))
 				.andExpect(status().isAccepted());
-
-
-
-
 	}
 
 	@Test
+	@Order(3)
 	public void IsWithdrawn() throws Exception{
 		mapper = new ObjectMapper();
 		Map<String, Integer> body = new HashMap<>();
-		body.put("id", 2);
+		body.put("id", (((List<Account>) accountRepository.findAll()).get(0)).getId());
 		body.put("amount" ,500);
 
 		mockMvc.perform(MockMvcRequestBuilders
@@ -96,13 +73,26 @@ class AccountControllerTest{
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(mapper.writeValueAsString(body)))
 				.andExpect(status().isAccepted());
+	}
 
+	@Test
+	@Order(4)
+	public void isAccountDeleted() throws Exception{
+		mockMvc.perform(MockMvcRequestBuilders.delete("/deleteAccount")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(String.valueOf((((List<Account>) accountRepository.findAll()).get(1)).getId()))
+						.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk());
 
-
+		mockMvc.perform(MockMvcRequestBuilders.delete("/deleteAccount")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(String.valueOf("ax3"))
+						.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isBadRequest());
 	}
 
 
 
 
 }
-*/
+

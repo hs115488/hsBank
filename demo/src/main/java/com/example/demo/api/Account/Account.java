@@ -1,9 +1,11 @@
 package com.example.demo.api.Account;
 
 
-import com.example.demo.api.Transaction.Transaction;
 import com.sun.istack.NotNull;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -48,6 +50,10 @@ public class Account {
     @NotNull
     @Column(name = "account_created")
     private Date accountCreated;
+
+    @Column(name = "password")
+    private String password;
+
 
 
 
