@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table>
+    <tr>
+        <th>Transaction Id</th>
+        <th>Account Number</th>
+        <th>Type</th>
+        <th>Amount</th>
+        <th>Previous Balance</th>
+        <th>New Balance</th>
+    </tr>
+<tr th:each="transaction : ${transactions}">
+    <td th:text="${transaction.transaction_id}"></td>
+    <td th:text="${transaction.accountNumber}"></td>
+    <td th:text="${transaction.transactionType}"></td>
+    <td th:text="${transaction.transactionAmount}"></td>
+    <td th:text="${transaction.previousBalance}"></td>
+    <td th:text="${transaction.newBalance}"></td>
+</tr>
+</table>
+</body>
+</html>

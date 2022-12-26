@@ -3,16 +3,21 @@ package com.example.demo.api.Account;
 import com.example.demo.api.Transaction.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.Date;
 
 
-@RestController
-@ResponseBody
+@Controller
+
 public class AccountController {
     @Autowired
     private AccountService accountService;
+
     @Autowired
     private TransactionService transactionService;
 
@@ -39,19 +44,9 @@ public class AccountController {
     @ResponseStatus(HttpStatus.OK)
     public void deleteAccount(@RequestBody int accountNumber) { accountService.deleteAccount(accountNumber);}
 
-    @RequestMapping(value = "/deposit", method = RequestMethod.PUT)
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public void deposit(@RequestBody AccountTransaction accountTransaction) throws Exception {
-        accountService.transaction(accountTransaction.getId(), accountTransaction.getAmount(), "deposit");
-        transactionService.createTransaction(accountTransaction, "deposit");
-    }
 
-    @RequestMapping(value = "/withdraw", method = RequestMethod.PUT)
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public void withdraw(@RequestBody AccountTransaction accountTransaction) throws Exception {
-        accountService.transaction(accountTransaction.getId(), accountTransaction.getAmount(), "withdraw");
-        transactionService.createTransaction(accountTransaction, "withdraw");
-    }
+
+
 
 
 }

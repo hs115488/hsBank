@@ -14,12 +14,28 @@
     <center>
         <div id = "DepositForm">
             <form action = "/depositForm" method = "GET">
-                <table><tbody><tr><td><input type = "submit" value = "Deposit"></td></tr></tbody></table>
-            </form>
+                <table><tbody><tr><td><input type = "submit" value = "Deposit Form"></td></tr></tbody></table>
+            </form><br>
         </div>
         <div id = "WithdrawForm">
             <form action = "/withdrawForm" method = "GET">
-                <table><tbody><tr><td><input type = "submit" value = "Withdraw"></td></tr></tbody></table>
+                <table><tbody><tr><td><input type = "submit" value = "Withdraw Form"></td></tr></tbody></table>
+            </form><br>
+        </div>
+        <div id = "GetTransactions">
+            <form action = "/getTransactions" method = "POST">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <input type = "submit" value = "Get Transactions"><br>
+                            </td>
+                            <td>
+                                <input type = "text" id = "accountNumber" name = "accountNumber">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </form>
         </div>
     </center>

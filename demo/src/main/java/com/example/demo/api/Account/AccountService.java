@@ -19,7 +19,6 @@ public class AccountService {
 
     public void transaction(int id, long amount, String transactionType) throws Exception {
         Account account = accountRepository.findById(Integer.valueOf(id)).orElse(null);
-        account.setBalance(account.getBalance() + amount);
 
         switch(transactionType){
             case "deposit":
@@ -30,13 +29,9 @@ public class AccountService {
 
             case "withdraw":
                 if(amount < 0){throw new Exception("Withdrawal amount cannot be less than zero");}
-                else{
-                    if((account.getBalance() - amount) < 0){account.setBalance(account.getBalance() - amount - overdraftFee);account.setOverdraft(true);}
-                    else{account.setBalance(account.getBalance() - amount);}
-
-                    accountRepository.save(account);
-                    break;
-                }
+                else{account.setBalance(account.getBalance() - amount);}
+                accountRepository.save(account);
+                break;
             }
         }
 }

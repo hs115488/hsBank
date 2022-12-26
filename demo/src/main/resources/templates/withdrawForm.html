@@ -1,10 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
 </head>
 <body>
-
+<div id = "GetTransactions">
+    <form action="/withdraw" method = "POST">
+        <table>
+            <tbody>
+            <tr>
+                <td>
+                    <label>Account Number</label>
+                    <input type = "text" name = "id"><br>
+                </td>
+                <td>
+                    <label>Amount</label>
+                    <input type = "text"  name = "amount">
+                </td>
+                <td>
+                    <button type = "submit">Submit</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
+</head>
 </body>
 </html>

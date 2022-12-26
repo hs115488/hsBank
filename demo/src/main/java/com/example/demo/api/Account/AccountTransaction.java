@@ -7,7 +7,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public
-class AccountTransaction {
-    public Integer id, amount;
+public class AccountTransaction {
+    public String id, amount;
 }
